@@ -1,7 +1,30 @@
-!-- favicon.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#000"/>
-  <circle cx="32" cy="32" r="26" fill="none" stroke="#ff4a00" stroke-width="6"/>
-  <!-- tiny “M/spiral” hint: minimal + abstract so it scales -->
-  <path d="M22 43V21l8 8m12-8v22l-8-8" fill="none" stroke="#ff4a00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-</sv
+<!-- favicon.svg — HALOX emblem, black background -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .hlx { stroke:#ff4a00; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+  </defs>
+
+  <!-- Black background -->
+  <rect width="512" height="512" fill="#000"/>
+
+  <!-- Outer ring -->
+  <circle class="hlx" cx="256" cy="256" r="196" stroke-width="28"/>
+
+  <!-- Left chevron -->
+  <path class="hlx" stroke-width="26"
+        d="M170 360 V152 L232 214 M232 298 L170 360"/>
+
+  <!-- Right chevron -->
+  <path class="hlx" stroke-width="26"
+        d="M342 360 V152 L280 214 M280 298 L342 360"/>
+
+  <!-- Central spiral -->
+  <path class="hlx" stroke-width="26"
+        d="M320 256
+           a64 64 0 1 1 -128 0
+           a48 48 0 1 0 96 0
+           a32 32 0 1 1 -64 0
+           a16 16 0 1 0 32 0"/>
+</svg>
