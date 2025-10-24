@@ -27,12 +27,17 @@
       padding: 24px;
     }
 
+    /* Logo drift after 2s */
     img {
       max-width: 88vw;
       height: auto;
-      animation: fadeInUp 0.8s ease-out both;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeDriftIn 1.5s ease-out forwards;
+      animation-delay: 2s; /* Logo drifts in after 2s */
     }
 
+    /* CONTACT drift after 5s */
     a.contact {
       display: inline-block;
       letter-spacing: .25rem;
@@ -41,8 +46,10 @@
       font-weight: 700;
       font-size: clamp(18px, 2.6vw, 24px);
       border-bottom: 2px solid transparent;
-      animation: fadeInUp 1s ease-out both;
-      animation-delay: 0.2s;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeDriftIn 1.5s ease-out forwards;
+      animation-delay: 7s; /* Appears 5s after the logo (2s + 5s) */
     }
 
     a.contact:hover, a.contact:focus {
@@ -50,12 +57,11 @@
       outline: none;
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeDriftIn {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* Accessibility: turn off motion if user prefers reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation: none !important;
