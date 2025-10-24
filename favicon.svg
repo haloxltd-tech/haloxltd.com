@@ -1,19 +1,27 @@
-<!-- favicon.svg — HALOX symbol on black background -->
+<!-- favicon.svg — HALOX emblem (symbol only), black background -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Black background -->
   <rect width="512" height="512" fill="#000"/>
-  <g fill="none" stroke="#ff4a00" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Outer circle -->
-    <circle cx="256" cy="256" r="196"/>
+
+  <!-- Common stroke style -->
+  <g fill="none" stroke="#ff4a00" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Outer ring -->
+    <circle cx="256" cy="256" r="196" stroke-width="28"/>
+
     <!-- Left chevron -->
-    <path d="M178 364V148l78 78-78 78"/>
+    <path d="M178 364V148L256 226 178 304" stroke-width="26"/>
+
     <!-- Right chevron -->
-    <path d="M334 364V148l-78 78 78 78"/>
-    <!-- Spiral center -->
-    <path d="M256 256
-             m 0,-60
-             a 60,60 0 1,1 0,120
-             a 45,45 0 1,0 0,-90
-             a 30,30 0 1,1 0,60
-             a 15,15 0 1,0 0,-30"/>
+    <path d="M334 364V148L256 226 334 304" stroke-width="26"/>
+
+    <!-- Central spiral (tuned for small sizes) -->
+    <path d="
+      M 320 256
+      A 64 64 0 1 1 192 256
+      A 48 48 0 1 0 288 256
+      A 32 32 0 1 1 224 256
+      A 16 16 0 1 0 256 256
+    " stroke-width="26"/>
   </g>
 </svg>
