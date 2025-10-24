@@ -7,6 +7,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <style>
     :root { --halo-orange:#ff4a00; }
+
     html, body {
       height: 100%;
       margin: 0;
@@ -14,6 +15,7 @@
       color: var(--halo-orange);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
+
     .wrap {
       min-height: 100%;
       display: flex;
@@ -24,10 +26,13 @@
       text-align: center;
       padding: 24px;
     }
+
     img {
       max-width: 88vw;
       height: auto;
+      animation: fadeInUp 0.8s ease-out both;
     }
+
     a.contact {
       display: inline-block;
       letter-spacing: .25rem;
@@ -36,20 +41,33 @@
       font-weight: 700;
       font-size: clamp(18px, 2.6vw, 24px);
       border-bottom: 2px solid transparent;
+      animation: fadeInUp 1s ease-out both;
+      animation-delay: 0.2s;
     }
+
     a.contact:hover, a.contact:focus {
       border-bottom-color: var(--halo-orange);
       outline: none;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Accessibility: turn off motion if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
 <body>
   <main class="wrap" role="main">
-    <!-- Make sure this file exists in the repo root -->
     <img src="logo-hero.png" alt="HALOX logo" />
-    <p>
-      <a class="contact" href="mailto:info@haloxltd.com">CONTACT</a>
-    </p>
+    <p><a class="contact" href="mailto:info@haloxltd.com">CONTACT</a></p>
   </main>
 </body>
 </html>
