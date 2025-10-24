@@ -9,64 +9,70 @@
     :root { --halo-orange:#ff4a00; }
 
     html, body {
-      height: 100%;
-      margin: 0;
-      background: #000;
-      color: var(--halo-orange);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      height:100%; margin:0;
+      background:#000; color:var(--halo-orange);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
     .wrap {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 56px;
-      text-align: center;
-      padding: 24px;
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:56px;
+      text-align:center;
+      padding:24px;
     }
 
-    /* Logo drift after 2s */
+    /* Logo burn-in with 1s black delay, 3s burn, and 0.5s afterglow */
     img {
-      max-width: 88vw;
-      height: auto;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: fadeDriftIn 1.5s ease-out forwards;
-      animation-delay: 2s; /* Logo drifts in after 2s */
+      max-width:88vw;
+      height:auto;
+      opacity:0;
+      filter:brightness(0) saturate(0);
+      animation: burnIn 3.5s ease-out forwards;
+      animation-delay:1s;
     }
 
-    /* CONTACT drift after 5s */
+    /* CONTACT drift after 4s total */
     a.contact {
-      display: inline-block;
-      letter-spacing: .25rem;
-      text-decoration: none;
-      color: var(--halo-orange);
-      font-weight: 700;
-      font-size: clamp(18px, 2.6vw, 24px);
-      border-bottom: 2px solid transparent;
-      opacity: 0;
-      transform: translateY(12px);
-      animation: fadeDriftIn 1.5s ease-out forwards;
-      animation-delay: 7s; /* Appears 5s after the logo (2s + 5s) */
+      display:inline-block;
+      letter-spacing:.25rem;
+      text-decoration:none;
+      color:var(--halo-orange);
+      font-weight:700;
+      font-size:clamp(18px,2.6vw,24px);
+      border-bottom:2px solid transparent;
+      opacity:0;
+      transform:translateY(12px);
+      animation: fadeDriftIn 1s ease-out forwards;
+      animation-delay:4s;
     }
 
     a.contact:hover, a.contact:focus {
-      border-bottom-color: var(--halo-orange);
-      outline: none;
+      border-bottom-color:var(--halo-orange);
+      outline:none;
     }
 
+    /* Burn-in with afterglow shimmer */
+    @keyframes burnIn {
+      0%   { opacity:0; filter:brightness(0) saturate(0); transform:scale(1.05); }
+      30%  { opacity:1; filter:brightness(2.2) saturate(4); transform:scale(1); }
+      60%  { filter:brightness(1.4) saturate(2); }
+      80%  { filter:brightness(1.1) saturate(1.4); }
+      90%  { filter:brightness(1.4) saturate(1.8); } /* Afterglow shimmer */
+      100% { opacity:1; filter:brightness(1) saturate(1); transform:none; }
+    }
+
+    /* CONTACT drift in */
     @keyframes fadeDriftIn {
-      0% { opacity: 0; transform: translateY(16px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from { opacity:0; transform:translateY(16px);}
+      to   { opacity:1; transform:translateY(0);}
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-      }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation:none!important;transition:none!important;}
     }
   </style>
 </head>
