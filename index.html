@@ -26,22 +26,33 @@
       box-sizing: border-box;
     }
 
-    /* Fixed: cap logo at 420px on desktop, fluid on mobile */
     .logo-wrap {
-      width: min(420px, 72vw);
+      position: relative;
+      width: min(380px, 72vw);
+      aspect-ratio: 1;
     }
 
     .logo-wrap img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
       display: block;
       opacity: 0;
       filter: brightness(0) saturate(0);
-      animation: burnIn 3.5s ease-out forwards;
-      animation-delay: 1s;
+      animation: burnIn 3.5s ease-out 0.5s forwards;
     }
 
-    /* CONTACT link */
+    .coil-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .coil-svg.visible { opacity: 1; }
+
     a.contact {
       display: inline-block;
       letter-spacing: .25rem;
@@ -52,9 +63,10 @@
       border-bottom: 2px solid transparent;
       opacity: 0;
       transform: translateY(12px);
-      animation:
-        fadeDriftIn 1s ease-out 4s forwards,
-        pulse 2.8s ease-in-out 5s infinite;
+    }
+
+    a.contact.visible {
+      animation: driftIn 1s ease-out forwards, contactPulse 2.4s ease-in-out 1s infinite;
     }
 
     a.contact:hover, a.contact:focus {
@@ -62,7 +74,6 @@
       outline: none;
     }
 
-    /* Burn-in with afterglow shimmer */
     @keyframes burnIn {
       0%   { opacity: 0; filter: brightness(0) saturate(0); transform: scale(1.05); }
       30%  { opacity: 1; filter: brightness(2.2) saturate(4); transform: scale(1); }
@@ -72,23 +83,47 @@
       100% { opacity: 1; filter: brightness(1) saturate(1); transform: none; }
     }
 
-    /* Steady heartbeat pulse after burn-in */
     @keyframes logoPulse {
       0%, 100% { filter: brightness(1) saturate(1); }
-      50%       { filter: brightness(1.35) saturate(1.6); }
+      50%      { filter: brightness(1.3) saturate(1.5); }
     }
 
-    /* CONTACT drift in */
-    @keyframes fadeDriftIn {
+    @keyframes coilHeat {
+      0%, 100% { opacity: 0.0; r: 38; }
+      40%      { opacity: 0.55; r: 44; }
+      60%      { opacity: 0.7;  r: 46; }
+      80%      { opacity: 0.45; r: 43; }
+    }
+
+    @keyframes ring1 {
+      0%   { r: 46; opacity: 0.5; stroke-width: 3; }
+      100% { r: 90; opacity: 0;   stroke-width: 0.5; }
+    }
+
+    @keyframes ring2 {
+      0%   { r: 46; opacity: 0.4; stroke-width: 2; }
+      100% { r: 110; opacity: 0;  stroke-width: 0.5; }
+    }
+
+    @keyframes ring3 {
+      0%   { r: 46; opacity: 0.3; stroke-width: 1.5; }
+      100% { r: 130; opacity: 0;  stroke-width: 0.3; }
+    }
+
+    @keyframes driftIn {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Subtle CONTACT pulse */
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.65; }
+    @keyframes contactPulse {
+      0%, 100% { opacity: 1;    letter-spacing: .25rem; }
+      50%      { opacity: 0.55; letter-spacing: .35rem; }
     }
+
+    .coil-heat { animation: coilHeat 2.4s ease-in-out infinite; }
+    .ring1     { animation: ring1   2.4s ease-out infinite; }
+    .ring2     { animation: ring2   2.4s ease-out 0.5s infinite; }
+    .ring3     { animation: ring3   2.4s ease-out 1s  infinite; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -97,23 +132,46 @@
 </head>
 <body>
   <main class="wrap" role="main">
+
     <div class="logo-wrap">
       <img id="logo" src="logo-hero.png" alt="HALOX logo" />
+
+      <svg class="coil-svg" id="coil-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="coilGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fff8f0" stop-opacity="1"/>
+            <stop offset="40%"  stop-color="#ff8030" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#ff4a00" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle class="coil-heat" cx="100" cy="88" r="38" fill="url(#coilGlow)"/>
+        <circle class="ring1" cx="100" cy="88" r="46" fill="none" stroke="#ff6820"/>
+        <circle class="ring2" cx="100" cy="88" r="46" fill="none" stroke="#ff5510"/>
+        <circle class="ring3" cx="100" cy="88" r="46" fill="none" stroke="#ff4a00"/>
+      </svg>
     </div>
-    <p style="margin:0"><a class="contact" href="mailto:info@haloxltd.com">CONTACT</a></p>
+
+    <p style="margin:0">
+      <a class="contact" id="contact" href="mailto:info@haloxltd.com">CONTACT</a>
+    </p>
+
   </main>
 
   <script>
-    // Switch from burn-in to steady pulse once burn-in finishes
-    const logo = document.getElementById('logo');
+    const logo    = document.getElementById('logo');
+    const coilSvg = document.getElementById('coil-svg');
+    const contact = document.getElementById('contact');
+
     logo.addEventListener('animationend', (e) => {
       if (e.animationName === 'burnIn') {
         logo.style.animation = 'none';
-        logo.style.opacity = '1';
-        logo.style.filter = 'brightness(1) saturate(1)';
+        logo.style.opacity   = '1';
+        logo.style.filter    = 'brightness(1) saturate(1)';
         logo.style.transform = 'none';
-        void logo.offsetWidth; // force reflow
-        logo.style.animation = 'logoPulse 3s ease-in-out infinite';
+        void logo.offsetWidth;
+        logo.style.animation = 'logoPulse 2.4s ease-in-out infinite';
+        coilSvg.classList.add('visible');
+        contact.classList.add('visible');
       }
     });
   </script>
