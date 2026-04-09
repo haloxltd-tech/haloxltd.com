@@ -42,6 +42,12 @@
       animation: burnIn 3.5s ease-out 0.5s forwards;
     }
 
+    .logo-wrap img.pulsing {
+      opacity: 1 !important;
+      filter: brightness(1) saturate(1) !important;
+      animation: logoPulse 2.4s ease-in-out infinite !important;
+    }
+
     .coil-svg {
       position: absolute;
       top: 0; left: 0;
@@ -144,10 +150,10 @@
             <stop offset="100%" stop-color="#ff4a00" stop-opacity="0"/>
           </radialGradient>
         </defs>
-        <circle class="coil-heat" cx="100" cy="78" r="38" fill="url(#coilGlow)"/>
-        <circle class="ring1" cx="100" cy="78" r="46" fill="none" stroke="#ff6820"/>
-        <circle class="ring2" cx="100" cy="78" r="46" fill="none" stroke="#ff5510"/>
-        <circle class="ring3" cx="100" cy="78" r="46" fill="none" stroke="#ff4a00"/>
+        <circle class="coil-heat" cx="100" cy="83" r="38" fill="url(#coilGlow)"/>
+        <circle class="ring1" cx="100" cy="83" r="46" fill="none" stroke="#ff6820"/>
+        <circle class="ring2" cx="100" cy="83" r="46" fill="none" stroke="#ff5510"/>
+        <circle class="ring3" cx="100" cy="83" r="46" fill="none" stroke="#ff4a00"/>
       </svg>
     </div>
 
@@ -162,11 +168,17 @@
     const coilSvg = document.getElementById('coil-svg');
     const contact = document.getElementById('contact');
 
+    function activate() {
+      logo.classList.add('pulsing');
+      coilSvg.classList.add('visible');
+      contact.classList.add('visible');
+    }
+
     logo.addEventListener('animationend', (e) => {
-      if (e.animationName === 'burnIn') {
-        logo.style.animation = 'none';
-        logo.style.opacity   = '1';
-        logo.style.filter    = 'brightness(1) saturate(1)';
-        logo.style.transform = 'none';
-        void logo.offsetWidth;
-        logo.style.animation = 'logoPulse 2.4s eas
+      if (e.animationName === 'burnIn') activate();
+    });
+
+    setTimeout(activate, 4200);
+  </script>
+</body>
+</html>
